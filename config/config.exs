@@ -1,14 +1,3 @@
-===> Analyzing applications...
-===> Compiling poolboy
-==> ssl_verify_fun
-Compiling 7 files (.erl)
-Generated ssl_verify_fun app
-==> nodejs
-Compiling 4 files (.ex)
-Generated nodejs app
-==> inertia
-Compiling 9 files (.ex)
-Generated inertia app
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Config module.
 #
