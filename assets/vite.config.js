@@ -25,6 +25,12 @@ export default defineConfig({
       input: {
         app: resolve(__dirname, "js/app.jsx"),
       },
+      external: [
+        "phoenix_html",
+        "phoenix",
+        "phoenix_live_view",
+        "../vendor/topbar",
+      ],
       output: {
         entryFileNames: "js/[name]-[hash].js",
         chunkFileNames: "js/[name]-[hash].js",
@@ -36,6 +42,12 @@ export default defineConfig({
             return "css/[name]-[hash][extname]";
           }
           return "assets/[name]-[hash][extname]";
+        },
+        globals: {
+          phoenix_html: "phoenix_html",
+          phoenix: "Phoenix",
+          phoenix_live_view: "LiveView",
+          "../vendor/topbar": "topbar",
         },
       },
     },
