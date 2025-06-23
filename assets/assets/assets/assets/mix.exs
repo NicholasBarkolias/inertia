@@ -1,4 +1,4 @@
-defmodule InertiaApp.Assets.MixProject do
+defmodule Assets.MixProject do
   use Mix.Project
 
   def project do
