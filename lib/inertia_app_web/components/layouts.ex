@@ -8,6 +8,7 @@ defmodule InertiaAppWeb.Layouts do
   in regular views and live views.
   """
   use InertiaAppWeb, :html
+  import Inertia.HTML
 
   embed_templates "layouts/*"
 
