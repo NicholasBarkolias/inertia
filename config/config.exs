@@ -1,3 +1,14 @@
+===> Analyzing applications...
+===> Compiling poolboy
+==> ssl_verify_fun
+Compiling 7 files (.erl)
+Generated ssl_verify_fun app
+==> nodejs
+Compiling 4 files (.ex)
+Generated nodejs app
+==> inertia
+Compiling 9 files (.ex)
+Generated inertia app
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Config module.
 #
@@ -20,40 +31,42 @@ config :inertia_app, InertiaAppWeb.Endpoint,
     layout: false
   ],
   pubsub_server: InertiaApp.PubSub,
-  live_view: [signing_salt: "6K5oQY8E"]
+  live_view: [signing_salt: "ZhMwFjNJ"]
 
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :inertia_app, InertiaApp.Mailer, adapter: Swoosh.Adapters.Local
+# Configure inertia
+config :inertia,
+  endpoint: InertiaAppWeb.Endpoint,
+  static_paths: ["/assets/app.js"],
+  default_version: "1",
+  camelize_props: true,
+  history: [encrypt: false],
+  ssr: false,
+  raise_on_ssr_failure: config_env() != :prod
 
-# Configure esbuild (the version is required)
+# Configure esbuild (the version is managed by the esbuild dependency in mix.exs)
 config :esbuild,
-  version: "0.17.11",
+  version: "0.21.5",
   inertia_app: [
     args:
-      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/*),
+      ~w(js/app.jsx --bundle --target=es2020 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
-# Configure tailwind (the version is required)
+# Configure tailwind (the version is managed by the tailwind dependency in mix.exs)
 config :tailwind,
-  version: "4.0.9",
+  version: "3.4.3",
   inertia_app: [
     args: ~w(
-      --input=assets/css/app.css
-      --output=priv/static/assets/css/app.css
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/css/app.css
     ),
-    cd: Path.expand("..", __DIR__)
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
-config :logger, :default_formatter,
+config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
