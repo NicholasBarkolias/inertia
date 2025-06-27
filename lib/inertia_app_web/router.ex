@@ -19,6 +19,12 @@ defmodule InertiaAppWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    
+    # Jewelry management routes
+    resources "/clients", ClientController
+    resources "/services", ServiceController
+    resources "/bookings", BookingController
+    resources "/tasks", TaskController
   end
 
   # Other scopes may use custom stacks.
